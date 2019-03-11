@@ -1,0 +1,25 @@
+* {
+  margin:0;
+  padding:0;
+}
+.image_in_table {
+  background: #798EF6;
+  border-radius: 7px;
+  padding-top: 25%;
+  padding-bottom: 25%;
+  padding-left: 15%;
+  padding-right: 15%;
+  width:65%;
+  height: 90%;
+}
+.cell {
+  width: 150px;
+  height: 170px;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
