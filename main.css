@@ -18,6 +18,7 @@
 }
 
 body {
+  background: #0D2CC9;
   height: 100vh;
   display: flex;
   justify-content: center;
