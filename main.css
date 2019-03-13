@@ -2,6 +2,23 @@
   margin:0;
   padding:0;
 }
+body {
+  background: #0D2CC9;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  width:640px;
+  height: 640px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.cell {
+  width: 25%;
+  height: 33.33%;
+}
 .image_in_table {
   background: #798EF6;
   border-radius: 7px;
@@ -10,17 +27,5 @@
   padding-left: 15%;
   padding-right: 15%;
   width:65%;
-  height: 90%;
-}
-.cell {
-  width: 150px;
-  height: 170px;
-}
-
-body {
-  background: #0D2CC9;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 57%;
 }
