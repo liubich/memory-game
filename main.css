@@ -1,6 +1,7 @@
 * {
   margin:0;
   padding:0;
+  box-sizing: border-box;
 }
 body {
   background: #0D2CC9;
@@ -9,23 +10,20 @@ body {
   justify-content: center;
   align-items: center;
 }
-.container {
+#container {
   width:640px;
   height: 640px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
-.cell {
-  width: 25%;
-  height: 33.33%;
-}
+
 .image_in_table {
+  padding: 3%;
+  width: 22%;
+  height: 32%;
   background: #798EF6;
   border-radius: 7px;
-  padding-top: 25%;
-  padding-bottom: 25%;
-  padding-left: 15%;
-  padding-right: 15%;
-  width:65%;
-  height: 57%;
+  margin: 5px;
 }
