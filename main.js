@@ -29,26 +29,26 @@ class Game {
     imageOnClick(event) {
         let idClicked = parseInt(event.target.id.slice(3));
         if(idClicked === this.prevClicked) return;
-        this.nowOpened++;
-        if(this.nowOpened > 2) {
+
+        if(++this.nowOpened > 2) {
             this.nowOpened = 2;
             return;
         }
         event.target.src = 'img/' + this.imagesRandomised[idClicked] + '.svg';
+    
         if(this.prevClicked === undefined) {
             this.prevClicked = idClicked;
+            return;
         }
-        else {
-            if(this.imagesRandomised[idClicked] == this.imagesRandomised[this.prevClicked]) {
-                this.imageContainers[idClicked].removeEventListener('click', this.imageOnClickBinded);
-                this.imageContainers[this.prevClicked].removeEventListener('click', this.imageOnClickBinded);
-                this.prevClicked = undefined;
-                this.nowOpened = 0;
-            }
-            else {
-                setTimeout(this.returnBackImageBinded,1000,idClicked);   
-            }
+        if(this.imagesRandomised[idClicked] !== this.imagesRandomised[this.prevClicked]) {
+            setTimeout(this.returnBackImageBinded,1000,idClicked);
+            return;
         }
+        this.imageContainers[idClicked].removeEventListener('click', this.imageOnClickBinded);
+        this.imageContainers[this.prevClicked].removeEventListener('click', this.imageOnClickBinded);
+        this.prevClicked = undefined;
+        this.nowOpened = 0;
+
     }
     returnBackImage(idClicked) {
         this.imageContainers[idClicked].src = 'img/js-badge.svg';
