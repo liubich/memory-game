@@ -26,4 +26,11 @@ body {
   background: #798EF6;
   border-radius: 7px;
   margin: 5px;
+  transform: scale(1);
+  transform-style: preserve-3d;
+  transition: transform .5s;
+}
+.image_in_table:active{
+  transform: scale(0.97);
+  transition: transform .2s;
 }
