@@ -29,8 +29,8 @@ class Game {
     imageOnClick(event) {
         let idClicked = parseInt(event.target.id.slice(3));
         if(idClicked === this.prevClicked) return;
-
-        if(++this.nowOpened > 2) {
+        this.nowOpened++;
+        if(this.nowOpened > 2) {
             this.nowOpened = 2;
             return;
         }
