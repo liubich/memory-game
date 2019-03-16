@@ -7,6 +7,8 @@ class Game {
         this.fillImagesRandom();
         this.setListenerOnClick();
         this.nowOpened = 0;
+        this.started=false;
+        this.numCards = imageContainers.length;
     }
     setListenerOnClick() {
         for(let imageContainer of this.imageContainers) {
@@ -27,6 +29,11 @@ class Game {
         }
     }
     imageOnClick(event) {
+        if(!this.interval) {
+            let timer=new Timer();
+            this.interval = timer.startTimer();
+        }
+        
         let idClicked = parseInt(event.target.id.slice(3));
         if(idClicked === this.prevClicked) return;
         this.nowOpened++;
@@ -51,7 +58,11 @@ class Game {
             this.imageContainers[this.prevClicked].classList.add("hidden");
             this.prevClicked = undefined;
             this.nowOpened = 0;
-        }, 300);
+            this.numCards-=2;
+            if(!this.numCards) {
+                clearInterval(this.interval);
+            }
+        }, 300);  
     }
     returnBackImage(idClicked) {
         this.imageContainers[idClicked].src = 'img/js-badge.svg';
@@ -61,6 +72,23 @@ class Game {
     }
 }
 
+class Timer {
+    constructor() {
+    }
+    startTimer() {
+        let pageTimer=document.getElementById("timer");
+        let numSec = 0;
+        return setInterval(function(){
+            numSec++;
+            let minutes=Math.floor(numSec/60);
+            if(minutes<10) minutes='0'+ minutes;
+            let seconds=numSec % 60;
+            if(seconds<10) seconds='0'+ seconds;
+            let timerValue=`${minutes}:${seconds}`;
+            pageTimer.firstChild.data=timerValue;
+        },1000);
+    }
+}
 const imgs = [];
 for(let i=0;i<12;i++){
     imgs.push(document.getElementById('img'+i));
