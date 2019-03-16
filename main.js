@@ -8,6 +8,7 @@ class Game {
         this.setListenerOnClick();
         this.nowOpened = 0;
         this.numCards = imageContainers.length;
+        this.timer=new Timer();
     }
     setListenerOnClick() {
         for(let imageContainer of this.imageContainers) {
@@ -28,8 +29,7 @@ class Game {
         }
     }
     imageOnClick(event) {
-        if(!this.timer || !this.timer.isStarted) {
-            this.timer=new Timer();
+        if(!this.timer.isStarted) {
             this.timer.startTimer();
         }
         
