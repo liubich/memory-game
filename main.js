@@ -7,7 +7,6 @@ class Game {
         this.fillImagesRandom();
         this.setListenerOnClick();
         this.nowOpened = 0;
-        this.started=false;
         this.numCards = imageContainers.length;
     }
     setListenerOnClick() {
@@ -29,7 +28,7 @@ class Game {
         }
     }
     imageOnClick(event) {
-        if(!this.timer) {
+        if(!this.timer || !this.timer.isStarted) {
             this.timer=new Timer();
             this.timer.startTimer();
         }
@@ -74,6 +73,7 @@ class Game {
 
 class Timer {
     constructor() {
+        this.started = false;
     }
     startTimer() {
         let pageTimer=document.getElementById("timer");
@@ -87,9 +87,14 @@ class Timer {
             let timerValue=`${minutes}:${seconds}`;
             pageTimer.firstChild.data=timerValue;
         },1000);
+        this.started = true;
     }
     stopTimer() {
         clearInterval(this.intStarted);
+        this.started = false;
+    }
+    get isStarted(){
+        return this.started;
     }
 }
 const imgs = [];
