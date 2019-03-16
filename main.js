@@ -44,11 +44,14 @@ class Game {
             setTimeout(this.returnBackImageBinded,1000,idClicked);
             return;
         }
-        this.imageContainers[idClicked].removeEventListener('click', this.imageOnClickBinded);
-        this.imageContainers[this.prevClicked].removeEventListener('click', this.imageOnClickBinded);
-        this.prevClicked = undefined;
-        this.nowOpened = 0;
-
+        setTimeout(() => {
+            this.imageContainers[idClicked].removeEventListener('click', this.imageOnClickBinded);
+            this.imageContainers[idClicked].classList.add("hidden");
+            this.imageContainers[this.prevClicked].removeEventListener('click', this.imageOnClickBinded);
+            this.imageContainers[this.prevClicked].classList.add("hidden");
+            this.prevClicked = undefined;
+            this.nowOpened = 0;
+        }, 300);
     }
     returnBackImage(idClicked) {
         this.imageContainers[idClicked].src = 'img/js-badge.svg';
