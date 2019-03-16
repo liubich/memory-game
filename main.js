@@ -29,9 +29,9 @@ class Game {
         }
     }
     imageOnClick(event) {
-        if(!this.interval) {
-            let timer=new Timer();
-            this.interval = timer.startTimer();
+        if(!this.timer) {
+            this.timer=new Timer();
+            this.timer.startTimer();
         }
         
         let idClicked = parseInt(event.target.id.slice(3));
@@ -60,9 +60,9 @@ class Game {
             this.nowOpened = 0;
             this.numCards-=2;
             if(!this.numCards) {
-                clearInterval(this.interval);
+                this.timer.stopTimer();
             }
-        }, 300);  
+        }, 300);
     }
     returnBackImage(idClicked) {
         this.imageContainers[idClicked].src = 'img/js-badge.svg';
@@ -78,7 +78,7 @@ class Timer {
     startTimer() {
         let pageTimer=document.getElementById("timer");
         let numSec = 0;
-        return setInterval(function(){
+        this.intStarted = setInterval(function(){
             numSec++;
             let minutes=Math.floor(numSec/60);
             if(minutes<10) minutes='0'+ minutes;
@@ -87,6 +87,9 @@ class Timer {
             let timerValue=`${minutes}:${seconds}`;
             pageTimer.firstChild.data=timerValue;
         },1000);
+    }
+    stopTimer() {
+        clearInterval(this.intStarted);
     }
 }
 const imgs = [];
