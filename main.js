@@ -7,6 +7,8 @@ class Game {
         this.fillImagesRandom();
         this.setListenerOnClick();
         this.nowOpened = 0;
+        this.numCards = imageContainers.length;
+        this.timer=new Timer();
     }
     setListenerOnClick() {
         for(let imageContainer of this.imageContainers) {
@@ -27,6 +29,10 @@ class Game {
         }
     }
     imageOnClick(event) {
+        if(!this.timer.isStarted) {
+            this.timer.startTimer();
+        }
+        
         let idClicked = parseInt(event.target.id.slice(3));
         if(idClicked === this.prevClicked) return;
         this.nowOpened++;
@@ -51,6 +57,10 @@ class Game {
             this.imageContainers[this.prevClicked].classList.add("hidden");
             this.prevClicked = undefined;
             this.nowOpened = 0;
+            this.numCards-=2;
+            if(!this.numCards) {
+                this.timer.stopTimer();
+            }
         }, 300);
     }
     returnBackImage(idClicked) {
@@ -61,6 +71,32 @@ class Game {
     }
 }
 
+class Timer {
+    constructor() {
+        this.started = false;
+    }
+    startTimer() {
+        let pageTimer=document.getElementById("timer");
+        let numSec = 0;
+        this.intStarted = setInterval(function(){
+            numSec++;
+            let minutes=Math.floor(numSec/60);
+            if(minutes<10) minutes='0'+ minutes;
+            let seconds=numSec % 60;
+            if(seconds<10) seconds='0'+ seconds;
+            let timerValue=`${minutes}:${seconds}`;
+            pageTimer.firstChild.data=timerValue;
+        },1000);
+        this.started = true;
+    }
+    stopTimer() {
+        clearInterval(this.intStarted);
+        this.started = false;
+    }
+    get isStarted(){
+        return this.started;
+    }
+}
 const imgs = [];
 for(let i=0;i<12;i++){
     imgs.push(document.getElementById('img'+i));

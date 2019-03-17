@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 body {
-  background: #0D2CC9;
+  background: #183BF0;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -34,4 +34,12 @@ body {
 }
 .hidden {
   visibility: hidden;
+}
+#timer {
+  width: 100%;
+  text-align: center;
+  color: #FBA90A;
+  font-size: 200%;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bolder;  
 }
