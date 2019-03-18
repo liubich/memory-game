@@ -5,7 +5,7 @@ class Game {
         this.fillImagesRandom();     
         this.nowOpened = 0;      
         this.timer=new Timer();
-        this.DOMManagerInst = new DOM_Manager;
+        this.DOMManagerInst = new DOM_Manager();
         this.DOMManagerInst.setListener(this.imageOnClickBinded);
         this.numCards = this.DOMManagerInst.cardsCount;
     }
@@ -41,11 +41,12 @@ class Game {
             return;
         }
         if(this.imagesRandomised[idClicked] !== this.imagesRandomised[this.prevClicked]) {
-            setTimeout(() => {this.returnBackImage(idClicked)},1000);
+            setTimeout(() => this.returnBackImage(idClicked),1000);
             return;
         }
         setTimeout(() => {
-            this.DOMManagerInst.hideCards(idClicked, this.prevClicked);
+            this.DOMManagerInst.hideCard(idClicked);
+            this.DOMManagerInst.hideCard(this.prevClicked);
             this.prevClicked = undefined;
             this.nowOpened = 0;
             this.numCards-=2;
@@ -55,7 +56,8 @@ class Game {
         }, 300);
     }
     returnBackImage(idClicked) {
-        this.DOMManagerInst.showBacks(idClicked, this.prevClicked);
+        this.DOMManagerInst.showBack(idClicked);
+        this.DOMManagerInst.showBack(this.prevClicked);
         this.prevClicked = undefined;
         this.nowOpened = 0;
     }
@@ -96,26 +98,23 @@ class DOM_Manager {
             this.imgs.push(document.getElementById("img"+i));
         }
     }
-    setListener(fun) {
+    setListener(fn) {
         for(let img of this.imgs) {
-            img.addEventListener('click', fun);
+            img.addEventListener('click', fn);
         }
     }
     get cardsCount() {
         return this.cardsCountVar;
     }
     showFace(cardNumber, srcFileNumber) {
-        this.imgs[cardNumber].src = 'img/' + srcFileNumber + '.svg';
+        this.imgs[cardNumber].src = `img/${srcFileNumber}.svg`;
     }
-    showBacks(cardNumber1, cardNumber2){
-        this.imgs[cardNumber1].src = 'img/js-badge.svg';
-        this.imgs[cardNumber2].src = 'img/js-badge.svg';
+    showBack(cardNumber){
+        this.imgs[cardNumber].src = 'img/js-badge.svg';
     }
-    hideCards(cardNumber1, cardNumber2) {
-        this.imgs[cardNumber1].removeEventListener('click', this.imageOnClickBinded);
-        this.imgs[cardNumber1].classList.add("hidden");
-        this.imgs[cardNumber2].removeEventListener('click', this.imageOnClickBinded);
-        this.imgs[cardNumber2].classList.add("hidden");
+    hideCard(cardNumber) {
+        this.imgs[cardNumber].removeEventListener('click', this.imageOnClickBinded);
+        this.imgs[cardNumber].classList.add("hidden");
     }
 }
 
