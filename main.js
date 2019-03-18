@@ -2,23 +2,23 @@ class Game {
     constructor() {
         this.imageOnClickBinded = this.imageOnClick.bind(this);
         this.imagesRandomised = [];
-        this.fillImagesRandom();     
+           
         this.nowOpened = 0;      
         this.timer=new Timer();
         this.DOMManagerInst = new DOM_Manager();
         this.DOMManagerInst.setListener(this.imageOnClickBinded);
         this.numCards = this.DOMManagerInst.cardsCount;
+        this.fillImagesRandom();  
     }
 
-    fillImagesRandom() {
+    fillImagesRandom(count) {
         const imageNumbers = [];
         for(let i=0; i<6;i++) {
             imageNumbers.push(i);
             imageNumbers.push(i);
         }
-        let num;
-        for(let i=11;i>=0;i--) {
-            num = Math.round(Math.random() * i);
+        for(let i=this.numCards-1;i>=0;i--) {
+            let num = Math.round(Math.random() * i);
             this.imagesRandomised.push(imageNumbers[num]);
             imageNumbers.splice(num, 1);
         }
