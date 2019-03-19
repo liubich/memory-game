@@ -2,11 +2,10 @@ class Game {
     constructor() {
         this.imageOnClickBinded = this.imageOnClick.bind(this);
         this.imagesRandomised = [];
-           
         this.nowOpened = 0;      
         this.timer=new Timer();
         this.DOMManagerInst = new DOM_Manager();
-        this.DOMManagerInst.setListener(this.imageOnClickBinded);
+        this.DOMManagerInst.setListeners(this.imageOnClickBinded);
         this.numCards = this.DOMManagerInst.cardsCount;
         this.fillImagesRandom();  
     }
@@ -23,12 +22,10 @@ class Game {
             imageNumbers.splice(num, 1);
         }
     }
-    imageOnClick(event) {
+    imageOnClick(idClicked) {
         if(!this.timer.isStarted) {
             this.timer.startTimer();
         }
-        
-        let idClicked = parseInt(event.target.id.slice(3));
         if(idClicked === this.prevClicked) return;
         this.nowOpened++;
         if(this.nowOpened > 2) {
@@ -93,15 +90,21 @@ class Timer {
 class DOM_Manager {
     constructor() {
         this.cardsCountVar = document.getElementsByClassName("card").length;
+        this.clickListenerBinded = this.clickListener.bind(this);
         this.imgs = [];
         for(let i=0;i<this.cardsCountVar;i++){
             this.imgs.push(document.getElementById("img"+i));
         }
     }
-    setListener(fn) {
+    setListeners(fn) {
+        this.callBackFn = fn
         for(let img of this.imgs) {
-            img.addEventListener('click', fn);
+            img.addEventListener('click', this.clickListenerBinded);
         }
+    }
+    clickListener(event) {
+        const idClicked = parseInt(event.target.id.slice(3));
+        this.callBackFn(idClicked);
     }
     get cardsCount() {
         return this.cardsCountVar;
@@ -113,7 +116,7 @@ class DOM_Manager {
         this.imgs[cardNumber].src = 'img/js-badge.svg';
     }
     hideCard(cardNumber) {
-        this.imgs[cardNumber].removeEventListener('click', this.imageOnClickBinded);
+        this.imgs[cardNumber].removeEventListener('click', this.clickListener);
         this.imgs[cardNumber].classList.add("hidden");
     }
 }
