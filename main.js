@@ -1,60 +1,49 @@
 class Game {
-    constructor(imageContainers) {
-        this.imageContainers = imageContainers;
+    constructor() {
         this.imageOnClickBinded = this.imageOnClick.bind(this);
-        this.returnBackImageBinded = this.returnBackImage.bind(this);
         this.imagesRandomised = [];
-        this.fillImagesRandom();
-        this.setListenerOnClick();
-        this.nowOpened = 0;
-        this.numCards = imageContainers.length;
+        this.nowOpened = 0;      
         this.timer=new Timer();
+        this.DOMManagerInst = new DOM_Manager();
+        this.DOMManagerInst.setListeners(this.imageOnClickBinded);
+        this.numCards = this.DOMManagerInst.cardsCount;
+        this.fillImagesRandom();  
     }
-    setListenerOnClick() {
-        for(let imageContainer of this.imageContainers) {
-            imageContainer.addEventListener('click', this.imageOnClickBinded);
-        }
-    }
-    fillImagesRandom() {
+
+    fillImagesRandom(count) {
         const imageNumbers = [];
         for(let i=0; i<6;i++) {
             imageNumbers.push(i);
             imageNumbers.push(i);
         }
-        let num;
-        for(let i=11;i>=0;i--) {
-            num = Math.round(Math.random() * i);
+        for(let i=this.numCards-1;i>=0;i--) {
+            let num = Math.round(Math.random() * i);
             this.imagesRandomised.push(imageNumbers[num]);
             imageNumbers.splice(num, 1);
         }
     }
-    imageOnClick(event) {
+    imageOnClick(idClicked) {
         if(!this.timer.isStarted) {
             this.timer.startTimer();
         }
-        
-        let idClicked = parseInt(event.target.id.slice(3));
         if(idClicked === this.prevClicked) return;
         this.nowOpened++;
         if(this.nowOpened > 2) {
             this.nowOpened = 2;
             return;
         }
-        event.target.src = 'img/' + this.imagesRandomised[idClicked] + '.svg';
-    
-        if(this.prevClicked === undefined) {
+        this.DOMManagerInst.showFace(idClicked, this.imagesRandomised[idClicked]);
+        if(this.nowOpened===1) {
             this.prevClicked = idClicked;
             return;
         }
         if(this.imagesRandomised[idClicked] !== this.imagesRandomised[this.prevClicked]) {
-            setTimeout(this.returnBackImageBinded,1000,idClicked);
+            setTimeout(() => this.returnBackImage(idClicked),1000);
             return;
         }
         setTimeout(() => {
-            this.imageContainers[idClicked].removeEventListener('click', this.imageOnClickBinded);
-            this.imageContainers[idClicked].classList.add("hidden");
-            this.imageContainers[this.prevClicked].removeEventListener('click', this.imageOnClickBinded);
-            this.imageContainers[this.prevClicked].classList.add("hidden");
+            this.DOMManagerInst.hideCard(idClicked);
+            this.DOMManagerInst.hideCard(this.prevClicked);
             this.prevClicked = undefined;
             this.nowOpened = 0;
             this.numCards-=2;
@@ -64,8 +53,8 @@ class Game {
         }, 300);
     }
     returnBackImage(idClicked) {
-        this.imageContainers[idClicked].src = 'img/js-badge.svg';
-        this.imageContainers[this.prevClicked].src = 'img/js-badge.svg';
+        this.DOMManagerInst.showBack(idClicked);
+        this.DOMManagerInst.showBack(this.prevClicked);
         this.prevClicked = undefined;
         this.nowOpened = 0;
     }
@@ -97,8 +86,39 @@ class Timer {
         return this.started;
     }
 }
-const imgs = [];
-for(let i=0;i<12;i++){
-    imgs.push(document.getElementById('img'+i));
+
+class DOM_Manager {
+    constructor() {
+        this.cardsCountVar = document.getElementsByClassName("card").length;
+        this.clickListenerBinded = this.clickListener.bind(this);
+        this.imgs = [];
+        for(let i=0;i<this.cardsCountVar;i++){
+            this.imgs.push(document.getElementById("img"+i));
+        }
+    }
+    setListeners(fn) {
+        this.callBackFn = fn
+        for(let img of this.imgs) {
+            img.addEventListener('click', this.clickListenerBinded);
+        }
+    }
+    clickListener(event) {
+        const idClicked = parseInt(event.target.id.slice(3));
+        this.callBackFn(idClicked);
+    }
+    get cardsCount() {
+        return this.cardsCountVar;
+    }
+    showFace(cardNumber, srcFileNumber) {
+        this.imgs[cardNumber].src = `img/${srcFileNumber}.svg`;
+    }
+    showBack(cardNumber){
+        this.imgs[cardNumber].src = 'img/js-badge.svg';
+    }
+    hideCard(cardNumber) {
+        this.imgs[cardNumber].removeEventListener('click', this.clickListener);
+        this.imgs[cardNumber].classList.add("hidden");
+    }
 }
-const objGame = new Game(imgs);
+
+const objGame = new Game();
