@@ -25,11 +25,19 @@
       </main>
       <div id="myModal" class="modal">
         <div class="modal-content">
-          <!-- <span class="close">&times;</span> -->
           <h3>Please, choose a level:</h3>
-          <p>Easy (3x4)</p>
-          <p>Medium (4x5)</p>
-          <p>Hard (5x6)</p>
+          <form name='diff_choose'>
+            <div>
+              <input type=radio name="gender" value="Easy" form="diff_choose"> Easy
+            </div>
+            <div>
+              <input type=radio name="gender" value="Medium" form="diff_choose"> Medium
+            </div>
+            <div>
+              <input type=radio name="gender" value="Hard" form="diff_choose"> Hard
+            </div>
+            <input type="submit" value="Start" class="submit">
+          </form>
         </div>
       </div>
       <script src="src/main.js"></script>

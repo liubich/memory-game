@@ -80,16 +80,21 @@ body {
 }
 
 /* The Close Button */
-.close {
+.submit {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.submit:hover,
+.submit:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+form {
+  display: flex;
+  flex-wrap: unset;
+  flex-direction: column;
 }
