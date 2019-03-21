@@ -10,34 +10,20 @@
     <body> 
       <main id="container">
         <div id="timer">00:00</div>
-        <img src="img/js-badge.svg" alt="1" id = "img0" class = "card">
-        <img src="img/js-badge.svg" alt="2" id = "img1" class = "card">
-        <img src="img/js-badge.svg" alt="3" id = "img2" class = "card">
-        <img src="img/js-badge.svg" alt="4" id = "img3" class = "card">
-        <img src="img/js-badge.svg" alt="5" id = "img4" class = "card">
-        <img src="img/js-badge.svg" alt="6" id = "img5" class = "card">
-        <img src="img/js-badge.svg" alt="7" id = "img6" class = "card">
-        <img src="img/js-badge.svg" alt="8" id = "img7" class = "card">
-        <img src="img/js-badge.svg" alt="9" id = "img8" class = "card">
-        <img src="img/js-badge.svg" alt="10" id = "img9" class = "card">
-        <img src="img/js-badge.svg" alt="11" id = "img10" class = "card">
-        <img src="img/js-badge.svg" alt="12" id = "img11" class = "card">
       </main>
       <div id="myModal" class="modal">
         <div class="modal-content">
-          <h3>Please, choose a level:</h3>
-          <form name='diff_choose'>
-            <div>
-              <input type=radio name="gender" value="Easy" form="diff_choose"> Easy
-            </div>
-            <div>
-              <input type=radio name="gender" value="Medium" form="diff_choose"> Medium
-            </div>
-            <div>
-              <input type=radio name="gender" value="Hard" form="diff_choose"> Hard
-            </div>
-            <input type="submit" value="Start" class="submit">
-          </form>
+          <p>Please, choose a level:</p>
+          <div class="forradio">
+              <input type="radio" name="difficulty" value="Easy" id="Easy"> <label for="Easy">Easy</label>
+          </div>
+          <div class="forradio">
+              <input type="radio" name="difficulty" value="Medium" id="Medium"> <label for="Medium">Medium</label>
+          </div>
+          <div class="forradio">
+              <input type="radio" name="difficulty" value="Hard" id="Hard"> <label for="Hard">Hard</label>
+          </div>
+            <input type="submit" value="Start" id="submit" disabled>
         </div>
       </div>
       <script src="src/main.js"></script>
