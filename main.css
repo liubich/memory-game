@@ -31,8 +31,17 @@ body {
   transform: scale(1);
   transition: transform 0.5s;
 }
-
-.card:active {
+.cards20 {
+  padding: 2%;
+  width: 17%;
+  height: 23%;
+}
+.cards30 {
+  padding: 1%;
+  width: 15%;
+  height: 17%;
+}
+.card:active{
   transform: scale(0.97);
   transition: transform 0.2s;
 }
@@ -52,7 +61,7 @@ body {
 }
 
 .modal {
-  display: block; /* Hidden by default */
+  display: block;
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -67,12 +76,10 @@ body {
   align-items: center;
 }
 
-/* Modal Content/Box */
 .modal-content {
   background-color: #D4DAF7;
   border: 2px solid #000000;
   width: 20%; /* Could be more or less, depending on screen size */
-  /* height: 20%; */
   display: flex;
   flex-wrap: unset;
   flex-direction: column;
@@ -80,7 +87,6 @@ body {
   align-items: center;
 }
 
-/* The Close Button */
 #submit {
   color: #F980F5;
   float: right;
@@ -111,5 +117,4 @@ p {
   font-weight: bold;
   margin: 5px;
   color: #9A0794;
-  /* font-family: 'Courier New', Courier, monospace; */
 }
