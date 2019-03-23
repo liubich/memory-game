@@ -102,13 +102,13 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
-.forradio {
+.radiocontainer {
   width: 35%; 
   font-size: 1.4vw;
   color:#F980F5;
 }
-.forradio:hover,
-.forradio:focus {
+.radiocontainer:hover,
+.radiocontainer:focus {
   color:   #9A0794;
   text-decoration: none;
   cursor: pointer;
