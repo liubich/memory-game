@@ -90,7 +90,7 @@ body {
 #submit {
   color: #F980F5;
   float: right;
-  font-size: 2.5vw;
+  font-size: 1.5rem;
   font-weight: bold;
   margin: 5px;
   background-color: rgb(253, 253, 253);
@@ -103,7 +103,7 @@ body {
 }
 .radioContainer {
   width: 35%; 
-  font-size: 1.4vw;
+  font-size: 0.9rem;
   color:#F980F5;
 }
 .radioContainer:hover,
@@ -113,7 +113,7 @@ body {
   cursor: pointer;
 }
 p {
-  font-size: 1.7vw;
+  font-size: 1.2rem;
   font-weight: bold;
   margin: 5px;
   color: #9A0794;
