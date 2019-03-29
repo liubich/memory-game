@@ -37,16 +37,16 @@ class DOMManager {
     }
   }
 
-  setListeners(fn) {
-    this.callBackFn = fn;
+  setListeners(imageOnClick) {
+    this.imageOnClick = imageOnClick;
     this.imgs.forEach((img) => {
       img.addEventListener('click', this.clickListenerBinded);
     });
   }
 
   clickListener(event) {
-    const idClicked = parseInt(event.target.id.slice(3), 2);
-    this.callBackFn(idClicked);
+    const idClicked = parseInt(event.target.id.slice(3), 10);
+    this.imageOnClick(idClicked);
   }
 
   get cardsCount() {
@@ -131,4 +131,5 @@ class Game {
 }
 
 
-Game();
+// eslint-disable-next-line no-new
+new Game();
