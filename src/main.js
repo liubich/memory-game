@@ -1,21 +1,20 @@
 class Card {
-  constructor(number, count, clickListener) {
+  constructor(cardNumber, cardsCount, clickListener) {
     const img = document.createElement('img');
     img.src = 'img/js-badge.svg';
-    img.alt = number;
-    img.id = `img${number}`;
-    img.order = Math.random() * 100;
-    img.classList.add(`cards${count}`, 'card');
+    img.alt = cardNumber;
+    img.id = `img${cardNumber}`;
+    img.classList.add(`cards${cardsCount}`, 'card');
     img.addEventListener('click', clickListener);
     this.clickListener = clickListener;
     this.img = img;
-    this.number = number;
+    this.cardNumber = cardNumber;
     this.opened = false;
     this.visible = true;
   }
 
   open() {
-    this.img.src = `img/${this.fileNumber}.svg`;
+    this.img.src = `img/${this.hiddenValue}.svg`;
     this.opened = true;
   }
 
@@ -31,8 +30,8 @@ class Card {
     this.img.removeEventListener('click', this.clickListener);
   }
 
-  setFileNumber(fileNumber) {
-    this.fileNumber = fileNumber;
+  setHiddenValue(hiddenValue) {
+    this.hiddenValue = hiddenValue;
   }
 }
 class Timer {
@@ -92,7 +91,7 @@ class Game {
     }
     let i = 0;
     this.cards.forEach((card) => {
-      card.setFileNumber(this.imagesRandomised[i]);
+      card.setHiddenValue(this.imagesRandomised[i]);
       i += 1;
     });
   }
@@ -105,7 +104,7 @@ class Game {
       this.prevClicked = idClicked;
       return;
     }
-    if (this.cards[this.prevClicked].fileNumber !== this.cards[idClicked].fileNumber) {
+    if (!this.cardsEqual(this.prevClicked, idClicked)) {
       setTimeout(() => this.returnBackImage(idClicked), 1000);
       return;
     }
@@ -117,6 +116,10 @@ class Game {
         this.timer.stopTimer();
       }
     }, 300);
+  }
+
+  cardsEqual(cardIndex1, cardIndex2) {
+    return this.cards[cardIndex1].hiddenValue === this.cards[cardIndex2].hiddenValue;
   }
 
   returnBackImage(idClicked) {
