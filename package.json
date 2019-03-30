@@ -5,7 +5,13 @@
   "main": "main.js",
   "scripts": {
     "lint:js": "eslint src/*.js",
+    "lint:css": "stylelint *.css",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "stylelint"
+    ]
   },
   "repository": {
     "type": "git",
@@ -20,6 +26,8 @@
   "devDependencies": {
     "eslint": "^5.15.3",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint-plugin-import": "^2.16.0",
+    "stylelint": "^9.10.1",
+    "stylelint-config-standard": "^18.2.0"
   }
 }
