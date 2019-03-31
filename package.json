@@ -8,11 +8,6 @@
     "lint:css": "stylelint *.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "eslintConfig": {
-    "extends": [
-      "stylelint"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/liubich/memory-game.git"
