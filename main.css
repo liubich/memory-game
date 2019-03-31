@@ -106,20 +106,21 @@ body {
 #submit:focus {
   color: #9a0794;
   text-decoration: none;
-  cursor: pointer;
 }
 
 .radioContainer {
   width: 35%;
+}
+
+label {
   font-size: 0.9rem;
   color: #f980f5;
 }
 
-.radioContainer:hover,
-.radioContainer:focus {
+label:hover,
+label:focus {
   color: #9a0794;
   text-decoration: none;
-  cursor: pointer;
 }
 
 p {
