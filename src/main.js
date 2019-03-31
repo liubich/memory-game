@@ -88,11 +88,7 @@ class Game {
       this.imagesRandomised.push(imageNumbers[num]);
       imageNumbers.splice(num, 1);
     }
-    let i = 0;
-    this.cards.forEach((card) => {
-      card.setHiddenValue(this.imagesRandomised[i]);
-      i += 1;
-    });
+    this.cards.forEach((card, i) => card.setHiddenValue(this.imagesRandomised[i]));
   }
 
   imageOnClick(idClicked) {
