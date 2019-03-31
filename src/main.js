@@ -8,7 +8,6 @@ class Card {
     img.addEventListener('click', clickListener);
     this.clickListener = clickListener;
     this.img = img;
-    this.cardNumber = cardNumber;
     this.opened = false;
     this.visible = true;
   }
