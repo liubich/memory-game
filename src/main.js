@@ -158,11 +158,13 @@ class DOMManager {
   preloadImages() {
     const pathes = [];
     pathes.push('img/js-badge.svg');
-    for(let i = 0; i<15; i += 1) {
+    for (let i = 0; i < 15; i += 1) {
       pathes.push(`img/${i}.svg`);
     }
-    pathes.forEach(path => {
-      this.imagesPreloaded.push(new Image().src = 'path');
+    pathes.forEach((path) => {
+      const image = new Image();
+      image.src = path;
+      this.imagesPreloaded.push(image);
     });
   }
 
