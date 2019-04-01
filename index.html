@@ -8,21 +8,27 @@
         <title>Memory Game</title>
     </head>
     <body> 
-      <main id="container">
-        <div id="timer">00:00</div>
-        <img src="img/js-badge.svg" alt="1" id = "img0" class = "card">
-        <img src="img/js-badge.svg" alt="2" id = "img1" class = "card">
-        <img src="img/js-badge.svg" alt="3" id = "img2" class = "card">
-        <img src="img/js-badge.svg" alt="4" id = "img3" class = "card">
-        <img src="img/js-badge.svg" alt="5" id = "img4" class = "card">
-        <img src="img/js-badge.svg" alt="6" id = "img5" class = "card">
-        <img src="img/js-badge.svg" alt="7" id = "img6" class = "card">
-        <img src="img/js-badge.svg" alt="8" id = "img7" class = "card">
-        <img src="img/js-badge.svg" alt="9" id = "img8" class = "card">
-        <img src="img/js-badge.svg" alt="10" id = "img9" class = "card">
-        <img src="img/js-badge.svg" alt="11" id = "img10" class = "card">
-        <img src="img/js-badge.svg" alt="12" id = "img11" class = "card">
+      <main id="cardsContainer">
+        <div id="timer" class="hidden">00:00</div>
       </main>
-        <script src="src/main.js"></script>
+      <div id="modalContainer" class="modal">
+        <div class="modalContent">
+          <p>Please, choose a level:</p>
+          <div class="radioContainer">
+              <input type="radio" name="difficulty" id="Easy" value="12">
+              <label for="Easy">Easy</label>
+          </div>
+          <div class="radioContainer">
+              <input type="radio" name="difficulty" id="Medium" value="20">
+              <label for="Medium">Medium</label>
+          </div>
+          <div class="radioContainer">
+              <input type="radio" name="difficulty" id="Hard" value="30">
+              <label for="Hard">Hard</label>
+          </div>
+            <input type="submit" value="Start" id="submit" disabled>
+        </div>
+      </div>
+      <script src="src/main.js"></script>
     </body>
 </html>
