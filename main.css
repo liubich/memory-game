@@ -20,6 +20,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: auto;
+  perspective: 1000px;
 }
 
 .cards12 {
@@ -45,7 +46,6 @@ body {
   transition: transform 0.5s;
   transform-style: preserve-3d;
   position: relative;
-  perspective: 1000px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
