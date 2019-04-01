@@ -151,6 +151,19 @@ class DOMManager {
     document.getElementById('Medium').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Hard').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('submit').addEventListener('click', this.submitOnClickBinded);
+    this.imagesPreloaded = [];
+    this.preloadImages();
+  }
+
+  preloadImages() {
+    const pathes = [];
+    pathes.push('img/js-badge.svg');
+    for(let i = 0; i<15; i += 1) {
+      pathes.push(`img/${i}.svg`);
+    }
+    pathes.forEach(path => {
+      this.imagesPreloaded.push(new Image().src = 'path');
+    });
   }
 
   static difficultOnChange() {
@@ -163,6 +176,7 @@ class DOMManager {
     document.getElementById('modalContainer').classList.add('hidden');
     const cards = this.createCards();
     this.game.start(cards);
+    this.imagesPreloaded = undefined;
   }
 
   createCards() {
