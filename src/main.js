@@ -187,7 +187,7 @@ class DOMManager {
     const selectedDiff = document.querySelectorAll('input[name="difficulty"]:checked');
     this.cardsCount = parseInt(selectedDiff[0].value, 10);
     document.getElementById('modalContainer').classList.add('hidden');
-    const cards = this.createCards();
+    this.createCards();
     this.game.start();
     this.imagesPreloaded = undefined;
   }
@@ -200,7 +200,6 @@ class DOMManager {
     cards.forEach(card => fragment.appendChild(card.div));
     const mainContainer = document.getElementById('cardsContainer');
     mainContainer.appendChild(fragment);
-    return cards;
   }
 
   clickListener(event) {
