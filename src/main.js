@@ -1,7 +1,7 @@
 class Card {
   constructor(cardNumber, cardsCount, clickListener) {
     const div = document.createElement('div');
-    div.classList.add(`cards${cardsCount}`, 'card');
+    div.classList.add(`cards${cardsCount}`, 'card', 'scale');
     div.addEventListener('click', clickListener);
     div.id = `div${cardNumber}`;
     this.div = div;
@@ -13,11 +13,13 @@ class Card {
 
   open() {
     this.div.classList.add('flip');
+    this.div.classList.remove('scale');
     this.opened = true;
   }
 
   close() {
     this.div.classList.remove('flip');
+    this.div.classList.add('scale');
     this.opened = false;
   }
 
