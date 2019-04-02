@@ -4,11 +4,6 @@ class Card {
     div.classList.add(`cards${cardsCount}`, 'card');
     div.addEventListener('click', clickListener);
     div.id = `div${cardNumber}`;
-    const backImg = document.createElement('img');
-    backImg.src = 'img/js-badge.svg';
-    backImg.alt = cardNumber;
-    backImg.classList.add('backImg');
-    div.appendChild(backImg);
     this.div = div;
     this.clickListener = clickListener;
     this.hiddenValue = undefined;
@@ -41,7 +36,16 @@ class Card {
     frontImg.classList.add('frontImg');
     this.div.appendChild(frontImg);
   }
+
+  setBackImage() {
+    const backImg = document.createElement('img');
+    backImg.src = 'img/js-badge.svg';
+    backImg.alt = 'backImg';
+    backImg.classList.add('backImg');
+    this.div.appendChild(backImg);
+  }
 }
+
 class Timer {
   constructor() {
     this.started = false;
@@ -72,17 +76,25 @@ class Timer {
     return this.started;
   }
 }
+
 class Game {
   constructor() {
     this.imageOnClickBinded = this.imageOnClick.bind(this);
     this.timer = new Timer();
   }
 
-  start(cards) {
+  appendImages(cards) {
     this.cards = cards;
     this.cardsCount = cards.length;
     this.imagesRandomised = [];
     this.fillImagesRandom();
+    this.cards.forEach((card, i) => {
+      card.setFrontImage(this.imagesRandomised[i]);
+      card.setBackImage();
+    });
+  }
+
+  start() {
     this.timer.startTimer();
   }
 
@@ -97,7 +109,6 @@ class Game {
       this.imagesRandomised.push(imageNumbers[num]);
       imageNumbers.splice(num, 1);
     }
-    this.cards.forEach((card, i) => card.setFrontImage(this.imagesRandomised[i]));
   }
 
   imageOnClick(idClicked) {
@@ -177,7 +188,7 @@ class DOMManager {
     this.cardsCount = parseInt(selectedDiff[0].value, 10);
     document.getElementById('modalContainer').classList.add('hidden');
     const cards = this.createCards();
-    this.game.start(cards);
+    this.game.start();
     this.imagesPreloaded = undefined;
   }
 
@@ -185,6 +196,7 @@ class DOMManager {
     const fragment = document.createDocumentFragment();
     const cards = Array(this.cardsCount)
       .fill(0).map((_, index) => new Card(index, this.cardsCount, this.clickListenerBinded));
+    this.game.appendImages(cards);
     cards.forEach(card => fragment.appendChild(card.div));
     const mainContainer = document.getElementById('cardsContainer');
     mainContainer.appendChild(fragment);
