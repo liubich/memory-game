@@ -1,38 +1,53 @@
 class Card {
   constructor(cardNumber, cardsCount, clickListener) {
-    const img = document.createElement('img');
-    img.src = 'img/js-badge.svg';
-    img.alt = cardNumber;
-    img.id = `img${cardNumber}`;
-    img.classList.add(`cards${cardsCount}`, 'card');
-    img.addEventListener('click', clickListener);
+    const div = document.createElement('div');
+    div.classList.add(`cards${cardsCount}`, 'card', 'scale');
+    div.addEventListener('click', clickListener);
+    div.id = `div${cardNumber}`;
+    this.div = div;
     this.clickListener = clickListener;
-    this.img = img;
+    this.hiddenValue = undefined;
     this.opened = false;
     this.visible = true;
   }
 
   open() {
-    this.img.src = `img/${this.hiddenValue}.svg`;
+    this.div.classList.add('flip');
+    this.div.classList.remove('scale');
     this.opened = true;
   }
 
   close() {
-    this.img.src = 'img/js-badge.svg';
+    this.div.classList.remove('flip');
+    this.div.classList.add('scale');
     this.opened = false;
   }
 
   hide() {
-    this.img.classList.add('hidden');
+    this.div.classList.add('hidden');
     this.visible = false;
     this.opened = false;
-    this.img.removeEventListener('click', this.clickListener);
+    this.div.removeEventListener('click', this.clickListener);
   }
 
-  setHiddenValue(hiddenValue) {
+  setFrontImage(hiddenValue) {
     this.hiddenValue = hiddenValue;
+    const frontImg = document.createElement('img');
+    frontImg.src = `img/${hiddenValue}.svg`;
+    frontImg.alt = hiddenValue;
+    frontImg.classList.add('frontImg');
+    this.div.appendChild(frontImg);
+  }
+
+  setBackImage() {
+    const backImg = document.createElement('img');
+    backImg.src = 'img/js-badge.svg';
+    backImg.alt = 'backImg';
+    backImg.classList.add('backImg');
+    this.div.appendChild(backImg);
   }
 }
+
 class Timer {
   constructor() {
     this.started = false;
@@ -63,17 +78,25 @@ class Timer {
     return this.started;
   }
 }
+
 class Game {
   constructor() {
     this.imageOnClickBinded = this.imageOnClick.bind(this);
     this.timer = new Timer();
   }
 
-  start(cards) {
+  appendImages(cards) {
     this.cards = cards;
     this.cardsCount = cards.length;
     this.imagesRandomised = [];
     this.fillImagesRandom();
+    this.cards.forEach((card, i) => {
+      card.setFrontImage(this.imagesRandomised[i]);
+      card.setBackImage();
+    });
+  }
+
+  start() {
     this.timer.startTimer();
   }
 
@@ -88,7 +111,6 @@ class Game {
       this.imagesRandomised.push(imageNumbers[num]);
       imageNumbers.splice(num, 1);
     }
-    this.cards.forEach((card, i) => card.setHiddenValue(this.imagesRandomised[i]));
   }
 
   imageOnClick(idClicked) {
@@ -110,7 +132,7 @@ class Game {
       if (!this.visibleCards) {
         this.timer.stopTimer();
       }
-    }, 300);
+    }, 600);
   }
 
   cardsEqual(cardIndex1, cardIndex2) {
@@ -142,6 +164,21 @@ class DOMManager {
     document.getElementById('Medium').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Hard').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('submit').addEventListener('click', this.submitOnClickBinded);
+    this.imagesPreloaded = [];
+    this.preloadImages();
+  }
+
+  preloadImages() {
+    const pathes = [];
+    pathes.push('img/js-badge.svg');
+    for (let i = 0; i < 15; i += 1) {
+      pathes.push(`img/${i}.svg`);
+    }
+    pathes.forEach((path) => {
+      const image = new Image();
+      image.src = path;
+      this.imagesPreloaded.push(image);
+    });
   }
 
   static difficultOnChange() {
@@ -152,22 +189,23 @@ class DOMManager {
     const selectedDiff = document.querySelectorAll('input[name="difficulty"]:checked');
     this.cardsCount = parseInt(selectedDiff[0].value, 10);
     document.getElementById('modalContainer').classList.add('hidden');
-    const cards = this.createCards();
-    this.game.start(cards);
+    this.createCards();
+    this.game.start();
+    this.imagesPreloaded = undefined;
   }
 
   createCards() {
     const fragment = document.createDocumentFragment();
     const cards = Array(this.cardsCount)
       .fill(0).map((_, index) => new Card(index, this.cardsCount, this.clickListenerBinded));
-    cards.forEach(card => fragment.appendChild(card.img));
+    this.game.appendImages(cards);
+    cards.forEach(card => fragment.appendChild(card.div));
     const mainContainer = document.getElementById('cardsContainer');
     mainContainer.appendChild(fragment);
-    return cards;
   }
 
   clickListener(event) {
-    const idClicked = parseInt(event.target.id.slice(3), 10);
+    const idClicked = parseInt(event.target.parentElement.id.slice(3), 10);
     this.game.imageOnClickBinded(idClicked);
   }
 }
