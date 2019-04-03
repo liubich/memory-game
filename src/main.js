@@ -132,7 +132,7 @@ class Game {
       if (!this.visibleCards) {
         this.timer.stopTimer();
       }
-    }, 500);
+    }, 600);
   }
 
   cardsEqual(cardIndex1, cardIndex2) {

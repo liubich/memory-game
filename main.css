@@ -41,7 +41,7 @@ body {
 .card {
   margin: 5px;
   transform: scale(1);
-  transition: transform 0.5s;
+  transition: transform 0.4s;
   transform-style: preserve-3d;
   position: relative;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
