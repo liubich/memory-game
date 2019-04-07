@@ -200,7 +200,7 @@ class DOMManager {
       .fill(0).map((_, index) => new Card(index, this.cardsCount, this.clickListenerBinded));
     this.game.appendImages(cards);
     cards.forEach(card => fragment.appendChild(card.div));
-    const mainContainer = document.getElementById('cardsContainer');
+    const mainContainer = document.getElementById('innerContainer');
     mainContainer.appendChild(fragment);
   }
 
