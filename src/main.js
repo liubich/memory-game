@@ -157,13 +157,23 @@ class Game {
 
 class DOMManager {
   constructor() {
-    this.clickListenerBinded = this.clickListener.bind(this);
-    this.submitOnClickBinded = this.submitOnClick.bind(this);
+    this.cardOnClick = (event) => {
+      const idClicked = parseInt(event.target.parentElement.id.slice(3), 10);
+      this.game.imageOnClickBinded(idClicked);
+    };
+    this.submitOnClick = () => {
+      const selectedDiff = document.querySelectorAll('input[name="difficulty"]:checked');
+      this.cardsCount = parseInt(selectedDiff[0].value, 10);
+      document.getElementById('modalContainer').classList.add('hidden');
+      this.createCards();
+      this.game.start();
+      this.imagesPreloaded = undefined;
+    };
     this.game = new Game();
     document.getElementById('Easy').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Medium').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Hard').addEventListener('change', DOMManager.difficultOnChange);
-    document.getElementById('submit').addEventListener('click', this.submitOnClickBinded);
+    document.getElementById('submit').addEventListener('click', this.submitOnClick);
     this.imagesPreloaded = [];
     this.preloadImages();
   }
@@ -185,28 +195,14 @@ class DOMManager {
     document.getElementById('submit').disabled = false;
   }
 
-  submitOnClick() {
-    const selectedDiff = document.querySelectorAll('input[name="difficulty"]:checked');
-    this.cardsCount = parseInt(selectedDiff[0].value, 10);
-    document.getElementById('modalContainer').classList.add('hidden');
-    this.createCards();
-    this.game.start();
-    this.imagesPreloaded = undefined;
-  }
-
   createCards() {
     const fragment = document.createDocumentFragment();
     const cards = Array(this.cardsCount)
-      .fill(0).map((_, index) => new Card(index, this.cardsCount, this.clickListenerBinded));
+      .fill(0).map((_, index) => new Card(index, this.cardsCount, this.cardOnClick));
     this.game.appendImages(cards);
     cards.forEach(card => fragment.appendChild(card.div));
     const mainContainer = document.getElementById('innerContainer');
     mainContainer.appendChild(fragment);
-  }
-
-  clickListener(event) {
-    const idClicked = parseInt(event.target.parentElement.id.slice(3), 10);
-    this.game.imageOnClickBinded(idClicked);
   }
 }
 
