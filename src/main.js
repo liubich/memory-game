@@ -115,19 +115,20 @@ class Game {
   }
 
   imageOnClick(idClicked) {
-    if(this.fieldIsBlocked) return;
+    if (this.fieldIsBlocked) return;
     switch (this.openedCardsNum) {
       case 0:
         this.cards[idClicked].open();
         return;
       case 1:
-        if(this.isCardOpened(idClicked)) return;
+        if (this.isCardOpened(idClicked)) return;
         this.cards[idClicked].open();
         this.fieldIsBlocked = true;
         this.checkCards();
-        return;
+        break;
       case 2:
-        return;
+        break;
+      default:
     }
   }
 
@@ -144,33 +145,34 @@ class Game {
   }
 
   areCardsEqual() {
-    const hiddenValuesOfOpened = this.cards.filter(card=>card.opened).map(card=>card.hiddenValue);
+    const hiddenValuesOfOpened = this.cards.filter(card => card.opened)
+      .map(card => card.hiddenValue);
     return hiddenValuesOfOpened[0] === hiddenValuesOfOpened[1];
   }
 
   returnBackImage() {
-    const openedCards = this.openedCards;
+    const { openedCards } = this;
     openedCards[0].close();
     openedCards[1].close();
     this.fieldIsBlocked = false;
   }
 
   hideGuessedCards() {
-    const openedCards = this.openedCards;
+    const { openedCards } = this;
     openedCards[0].hide();
     openedCards[1].hide();
     this.fieldIsBlocked = false;
     if (!this.visibleCardsNum) {
       this.timer.stopTimer();
     }
-  };
+  }
 
   get openedCardsNum() {
     return this.cards.filter(a => a.opened).length;
   }
 
   get openedCards() {
-    return this.cards.filter(a => a.opened)
+    return this.cards.filter(a => a.opened);
   }
 
   get visibleCardsNum() {
