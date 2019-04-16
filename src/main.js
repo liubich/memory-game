@@ -127,7 +127,6 @@ class Game {
         this.checkCards();
         break;
       default:
-        return;
     }
   }
 
