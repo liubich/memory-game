@@ -126,14 +126,14 @@ class Game {
         this.fieldIsBlocked = true;
         this.checkCards();
         break;
-      case 2:
-        break;
       default:
+        return;
     }
   }
 
   isCardOpened(cardId) {
-    return parseInt(this.openedCards[0].div.id.slice(3), 10) === cardId;
+    const openedCardId = parseInt(this.openedCards[0].div.id.slice(3), 10);
+    return openedCardId === cardId;
   }
 
   checkCards() {
@@ -145,7 +145,7 @@ class Game {
   }
 
   areCardsEqual() {
-    const hiddenValuesOfOpened = this.cards.filter(card => card.opened)
+    const hiddenValuesOfOpened = this.openedCards
       .map(card => card.hiddenValue);
     return hiddenValuesOfOpened[0] === hiddenValuesOfOpened[1];
   }
@@ -168,7 +168,7 @@ class Game {
   }
 
   get openedCardsNum() {
-    return this.cards.filter(a => a.opened).length;
+    return this.openedCards.length;
   }
 
   get openedCards() {
@@ -180,21 +180,10 @@ class Game {
   }
 }
 
-
 class DOMManager {
   constructor() {
-    this.cardOnClick = (event) => {
-      const idClicked = parseInt(event.target.parentElement.id.slice(3), 10);
-      this.game.imageOnClickBinded(idClicked);
-    };
-    this.submitOnClick = () => {
-      const selectedDiff = document.querySelectorAll('input[name="difficulty"]:checked');
-      this.cardsCount = parseInt(selectedDiff[0].value, 10);
-      document.getElementById('modalContainer').classList.add('hidden');
-      this.createCards();
-      this.game.start();
-      this.imagesPreloaded = undefined;
-    };
+    this.cardOnClick = this.cardOnClick.bind(this);
+    this.submitOnClick = this.submitOnClick.bind(this);
     this.game = new Game();
     document.getElementById('Easy').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Medium').addEventListener('change', DOMManager.difficultOnChange);
@@ -202,6 +191,20 @@ class DOMManager {
     document.getElementById('submit').addEventListener('click', this.submitOnClick);
     this.imagesPreloaded = [];
     this.preloadImages();
+  }
+
+  submitOnClick() {
+    const selectedDiff = document.querySelector('input[name="difficulty"]:checked');
+    this.cardsCount = parseInt(selectedDiff.value, 10);
+    document.getElementById('modalContainer').classList.add('hidden');
+    this.createCards();
+    this.game.start();
+    this.imagesPreloaded = undefined;
+  }
+
+  cardOnClick(event) {
+    const idClicked = parseInt(event.target.parentElement.id.slice(3), 10);
+    this.game.imageOnClickBinded(idClicked);
   }
 
   preloadImages() {
