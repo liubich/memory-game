@@ -83,6 +83,7 @@ class Game {
   constructor() {
     this.imageOnClickBinded = this.imageOnClick.bind(this);
     this.timer = new Timer();
+    this.fieldIsBlocked = false;
   }
 
   appendImages(cards) {
@@ -114,58 +115,95 @@ class Game {
   }
 
   imageOnClick(idClicked) {
-    if (idClicked === this.prevClicked) return;
-    if (this.openedCards === 2) return;
-    this.cards[idClicked].open();
-    if (this.openedCards === 1) {
-      this.prevClicked = idClicked;
-      return;
+    if (this.fieldIsBlocked) return;
+    switch (this.openedCardsNum) {
+      case 0:
+        this.cards[idClicked].open();
+        return;
+      case 1:
+        if (this.isCardOpened(idClicked)) return;
+        this.cards[idClicked].open();
+        this.fieldIsBlocked = true;
+        this.checkCards();
+        break;
+      default:
     }
-    if (!this.cardsEqual(this.prevClicked, idClicked)) {
-      setTimeout(() => this.returnBackImage(idClicked), 1000);
-      return;
-    }
-    setTimeout(() => {
-      this.cards[idClicked].hide();
-      this.cards[this.prevClicked].hide();
-      this.prevClicked = undefined;
-      if (!this.visibleCards) {
-        this.timer.stopTimer();
-      }
-    }, 600);
   }
 
-  cardsEqual(cardIndex1, cardIndex2) {
-    return this.cards[cardIndex1].hiddenValue === this.cards[cardIndex2].hiddenValue;
+  isCardOpened(cardId) {
+    const openedCardId = parseInt(this.openedCards[0].div.id.slice(3), 10);
+    return openedCardId === cardId;
   }
 
-  returnBackImage(idClicked) {
-    this.cards[idClicked].close();
-    this.cards[this.prevClicked].close();
-    this.prevClicked = undefined;
+  checkCards() {
+    if (!this.areCardsEqual()) {
+      setTimeout(() => this.returnBackImage(), 1000);
+      return;
+    }
+    setTimeout(() => this.hideGuessedCards(), 600);
+  }
+
+  areCardsEqual() {
+    const hiddenValuesOfOpened = this.openedCards
+      .map(card => card.hiddenValue);
+    return hiddenValuesOfOpened[0] === hiddenValuesOfOpened[1];
+  }
+
+  returnBackImage() {
+    const { openedCards } = this;
+    openedCards[0].close();
+    openedCards[1].close();
+    this.fieldIsBlocked = false;
+  }
+
+  hideGuessedCards() {
+    const { openedCards } = this;
+    openedCards[0].hide();
+    openedCards[1].hide();
+    this.fieldIsBlocked = false;
+    if (!this.visibleCardsNum) {
+      this.timer.stopTimer();
+    }
+  }
+
+  get openedCardsNum() {
+    return this.openedCards.length;
   }
 
   get openedCards() {
-    return this.cards.filter(a => a.opened).length;
+    return this.cards.filter(a => a.opened);
   }
 
-  get visibleCards() {
+  get visibleCardsNum() {
     return this.cards.filter(a => a.visible).length;
   }
 }
 
-
 class DOMManager {
   constructor() {
-    this.clickListenerBinded = this.clickListener.bind(this);
-    this.submitOnClickBinded = this.submitOnClick.bind(this);
+    this.cardOnClick = this.cardOnClick.bind(this);
+    this.submitOnClick = this.submitOnClick.bind(this);
     this.game = new Game();
     document.getElementById('Easy').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Medium').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Hard').addEventListener('change', DOMManager.difficultOnChange);
-    document.getElementById('submit').addEventListener('click', this.submitOnClickBinded);
+    document.getElementById('submit').addEventListener('click', this.submitOnClick);
     this.imagesPreloaded = [];
     this.preloadImages();
+  }
+
+  submitOnClick() {
+    const selectedDiff = document.querySelector('input[name="difficulty"]:checked');
+    this.cardsCount = parseInt(selectedDiff.value, 10);
+    document.getElementById('modalContainer').classList.add('hidden');
+    this.createCards();
+    this.game.start();
+    this.imagesPreloaded = undefined;
+  }
+
+  cardOnClick(event) {
+    const idClicked = parseInt(event.target.parentElement.id.slice(3), 10);
+    this.game.imageOnClickBinded(idClicked);
   }
 
   preloadImages() {
@@ -185,28 +223,14 @@ class DOMManager {
     document.getElementById('submit').disabled = false;
   }
 
-  submitOnClick() {
-    const selectedDiff = document.querySelectorAll('input[name="difficulty"]:checked');
-    this.cardsCount = parseInt(selectedDiff[0].value, 10);
-    document.getElementById('modalContainer').classList.add('hidden');
-    this.createCards();
-    this.game.start();
-    this.imagesPreloaded = undefined;
-  }
-
   createCards() {
     const fragment = document.createDocumentFragment();
     const cards = Array(this.cardsCount)
-      .fill(0).map((_, index) => new Card(index, this.cardsCount, this.clickListenerBinded));
+      .fill(0).map((_, index) => new Card(index, this.cardsCount, this.cardOnClick));
     this.game.appendImages(cards);
     cards.forEach(card => fragment.appendChild(card.div));
     const mainContainer = document.getElementById('innerContainer');
     mainContainer.appendChild(fragment);
-  }
-
-  clickListener(event) {
-    const idClicked = parseInt(event.target.parentElement.id.slice(3), 10);
-    this.game.imageOnClickBinded(idClicked);
   }
 }
 
