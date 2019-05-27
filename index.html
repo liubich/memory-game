@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-        <meta name="theme-color" content="#000000" />
-        <link rel="stylesheet" href="main.css">
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="manifest" href="manifest.json" />
-        <title>Memory Game</title>
-    </head>
-    <body> 
-      <main class="cards-container">
-        <div class="cards-container__inner-container">
-          <div class="cards-container__timer cards-container__timer--hidden">00:00</div>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000" />
+  <link rel="stylesheet" href="main.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="manifest.json" />
+  <title>Memory Game</title>
+</head>
+
+<body>
+  <main class="cards-container">
+    <div class="cards-container__inner-container">
+      <div class="cards-container__timer cards-container__timer--hidden">00:00</div>
+    </div>
+  </main>
+  <div class="difficulty-container">
+    <div class="difficulty-container__inner-container">
+      <h1 class="difficulty-container__header">Please, choose a level:</h1>
+      <div class="difficulty-container__radio-buttons">
+        <div class="difficulty-container__radio-container radio-container">
+          <input class="radio-container__radio-button" type="radio" name="difficulty" id="Easy" value="12">
+          <label class="radio-container__radio-caption" for="Easy">Easy</label>
         </div>
-      </main>
-      <div class="difficulty-container">
-        <div class="difficulty-container__inner-container">
-          <h1 class="difficulty-container__header">Please, choose a level:</h1>
-          <div class="difficulty-container__radio-container radio-container">
-              <input class="radio-container__radio-button" type="radio" name="difficulty" id="Easy" value="12">
-              <label class="radio-container__radio-caption" for="Easy">Easy</label>
-          </div>
-          <div class="difficulty-container__radio-container radio-container">
-              <input class="radio-container__radio-button" type="radio" name="difficulty" id="Medium" value="20">
-              <label class="radio-container__radio-caption" for="Medium">Medium</label>
-          </div>
-          <div class="difficulty-container__radio-container radio-container">
-              <input class="radio-container__radio-button" type="radio" name="difficulty" id="Hard" value="30">
-              <label class="radio-container__radio-caption" for="Hard">Hard</label>
-          </div>
-          <input type="submit" value="Start" class="difficulty-container__submit submit" disabled>
+        <div class="difficulty-container__radio-container radio-container">
+          <input class="radio-container__radio-button" type="radio" name="difficulty" id="Medium" value="20">
+          <label class="radio-container__radio-caption" for="Medium">Medium</label>
+        </div>
+        <div class="difficulty-container__radio-container radio-container">
+          <input class="radio-container__radio-button" type="radio" name="difficulty" id="Hard" value="30">
+          <label class="radio-container__radio-caption" for="Hard">Hard</label>
         </div>
       </div>
-      <script src="src/main.js"></script>
-    </body>
+      <input type="submit" value="Start" class="difficulty-container__submit submit" disabled>
+    </div>
+  </div>
+  <script src="src/main.js"></script>
+</body>
+
 </html>

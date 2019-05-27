@@ -137,14 +137,19 @@ body {
   align-items: center;
 }
 
+.difficulty-container__radio-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 .submit {
   color: #f980f5;
-  float: right;
   font-size: 1.5rem;
   font-weight: bold;
-  margin: 5px;
+  margin: 8px;
   background-color: rgb(253, 253, 253);
-  padding: 0 5px;
+  padding: 2px 10px;
   cursor: pointer;
 }
 
@@ -154,13 +159,9 @@ body {
   text-decoration: none;
 }
 
-.radio-container {
-  width: 35%;
-}
-
 .radio-container__radio-caption {
-  font-size: 0.9rem;
-  color: #f980f5;
+  font-size: 1.2rem;
+  color: #9a0794;
   cursor: pointer;
 }
 
@@ -168,14 +169,9 @@ body {
   cursor: pointer;
 }
 
-.radio-container__radio-caption:hover {
-  color: #9a0794;
-  text-decoration: none;
-}
-
 .difficulty-container__header {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
   padding: 8px;
-  color: #9a0794;
+  color: #580256;
 }
