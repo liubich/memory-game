@@ -1,7 +1,7 @@
 class Card {
   constructor(cardNumber, cardsCount, clickListener) {
     const div = document.createElement('div');
-    div.classList.add(`cards${cardsCount}`, 'card', 'scale');
+    div.classList.add(`card__card-container--quantity-${cardsCount}`, 'card__card-container', 'card__card-container--scale');
     div.addEventListener('click', clickListener);
     div.id = `div${cardNumber}`;
     this.div = div;
@@ -12,19 +12,19 @@ class Card {
   }
 
   open() {
-    this.div.classList.add('flip');
-    this.div.classList.remove('scale');
+    this.div.classList.add('card__card-container--flip');
+    this.div.classList.remove('card__card-container--scale');
     this.opened = true;
   }
 
   close() {
-    this.div.classList.remove('flip');
-    this.div.classList.add('scale');
+    this.div.classList.remove('card__card-container--flip');
+    this.div.classList.add('card__card-container--scale');
     this.opened = false;
   }
 
   hide() {
-    this.div.classList.add('hidden');
+    this.div.classList.add('card__card-container--hidden');
     this.visible = false;
     this.opened = false;
     this.div.removeEventListener('click', this.clickListener);
@@ -35,7 +35,7 @@ class Card {
     const frontImg = document.createElement('img');
     frontImg.src = `img/${hiddenValue}.svg`;
     frontImg.alt = hiddenValue;
-    frontImg.classList.add('frontImg');
+    frontImg.classList.add('card__front-img');
     this.div.appendChild(frontImg);
   }
 
@@ -43,7 +43,7 @@ class Card {
     const backImg = document.createElement('img');
     backImg.src = 'img/js-badge.svg';
     backImg.alt = 'backImg';
-    backImg.classList.add('backImg');
+    backImg.classList.add('card__back-img');
     this.div.appendChild(backImg);
   }
 }
@@ -54,8 +54,8 @@ class Timer {
   }
 
   startTimer() {
-    const pageTimer = document.getElementById('timer');
-    pageTimer.classList.remove('hidden');
+    const pageTimer = document.getElementsByClassName('cards-container__timer')[0];
+    pageTimer.classList.remove('cards-container__timer--hidden');
     let numSec = 0;
     this.intStarted = setInterval(() => {
       numSec += 1;
@@ -187,7 +187,7 @@ class DOMManager {
     document.getElementById('Easy').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Medium').addEventListener('change', DOMManager.difficultOnChange);
     document.getElementById('Hard').addEventListener('change', DOMManager.difficultOnChange);
-    document.getElementById('submit').addEventListener('click', this.submitOnClick);
+    document.getElementsByClassName('submit')[0].addEventListener('click', this.submitOnClick);
     this.imagesPreloaded = [];
     this.preloadImages();
   }
@@ -195,7 +195,7 @@ class DOMManager {
   submitOnClick() {
     const selectedDiff = document.querySelector('input[name="difficulty"]:checked');
     this.cardsCount = parseInt(selectedDiff.value, 10);
-    document.getElementById('modalContainer').classList.add('hidden');
+    document.getElementsByClassName('difficulty-container')[0].classList.add('difficulty-container__hidden');
     this.createCards();
     this.game.start();
     this.imagesPreloaded = undefined;
@@ -220,7 +220,7 @@ class DOMManager {
   }
 
   static difficultOnChange() {
-    document.getElementById('submit').disabled = false;
+    document.getElementsByClassName('submit')[0].disabled = false;
   }
 
   createCards() {
@@ -229,7 +229,7 @@ class DOMManager {
       .fill(0).map((_, index) => new Card(index, this.cardsCount, this.cardOnClick));
     this.game.appendImages(cards);
     cards.forEach(card => fragment.appendChild(card.div));
-    const mainContainer = document.getElementById('innerContainer');
+    const mainContainer = document.getElementsByClassName('cards-container__inner-container')[0];
     mainContainer.appendChild(fragment);
   }
 }

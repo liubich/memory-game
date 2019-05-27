@@ -10,27 +10,27 @@
         <title>Memory Game</title>
     </head>
     <body> 
-      <main id="cardsContainer">
-        <div id="innerContainer">
-          <div id="timer" class="hidden">00:00</div>
+      <main class="cards-container">
+        <div class="cards-container__inner-container">
+          <div class="cards-container__timer cards-container__timer--hidden">00:00</div>
         </div>
       </main>
-      <div id="modalContainer" class="modal">
-        <div class="modalContent">
-          <p>Please, choose a level:</p>
-          <div class="radioContainer">
-              <input type="radio" name="difficulty" id="Easy" value="12">
-              <label for="Easy">Easy</label>
+      <div class="difficulty-container">
+        <div class="difficulty-container__inner-container">
+          <h1 class="difficulty-container__header">Please, choose a level:</h1>
+          <div class="difficulty-container__radio-container radio-container">
+              <input class="radio-container__radio-button" type="radio" name="difficulty" id="Easy" value="12">
+              <label class="radio-container__radio-caption" for="Easy">Easy</label>
           </div>
-          <div class="radioContainer">
-              <input type="radio" name="difficulty" id="Medium" value="20">
-              <label for="Medium">Medium</label>
+          <div class="difficulty-container__radio-container radio-container">
+              <input class="radio-container__radio-button" type="radio" name="difficulty" id="Medium" value="20">
+              <label class="radio-container__radio-caption" for="Medium">Medium</label>
           </div>
-          <div class="radioContainer">
-              <input type="radio" name="difficulty" id="Hard" value="30">
-              <label for="Hard">Hard</label>
+          <div class="difficulty-container__radio-container radio-container">
+              <input class="radio-container__radio-button" type="radio" name="difficulty" id="Hard" value="30">
+              <label class="radio-container__radio-caption" for="Hard">Hard</label>
           </div>
-            <input type="submit" value="Start" id="submit" disabled>
+          <input type="submit" value="Start" class="difficulty-container__submit submit" disabled>
         </div>
       </div>
       <script src="src/main.js"></script>
