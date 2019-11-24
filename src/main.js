@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 class Card {
   constructor(cardNumber, cardsCount, clickListener) {
     const div = document.createElement('div');
@@ -145,7 +146,7 @@ class Game {
 
   areCardsEqual() {
     const hiddenValuesOfOpened = this.openedCards
-      .map(card => card.hiddenValue);
+      .map((card) => card.hiddenValue);
     return hiddenValuesOfOpened[0] === hiddenValuesOfOpened[1];
   }
 
@@ -171,11 +172,11 @@ class Game {
   }
 
   get openedCards() {
-    return this.cards.filter(a => a.opened);
+    return this.cards.filter((a) => a.opened);
   }
 
   get visibleCardsNum() {
-    return this.cards.filter(a => a.visible).length;
+    return this.cards.filter((a) => a.visible).length;
   }
 }
 
@@ -228,7 +229,7 @@ class DOMManager {
     const cards = Array(this.cardsCount)
       .fill(0).map((_, index) => new Card(index, this.cardsCount, this.cardOnClick));
     this.game.appendImages(cards);
-    cards.forEach(card => fragment.appendChild(card.div));
+    cards.forEach((card) => fragment.appendChild(card.div));
     const mainContainer = document.getElementsByClassName('cards-container__inner-container')[0];
     mainContainer.appendChild(fragment);
   }
