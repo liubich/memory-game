@@ -65,8 +65,7 @@ export default class Game {
   }
 
   areCardsEqual() {
-    const hiddenValuesOfOpened = this.openedCards
-      .map(card => card.hiddenValue);
+    const hiddenValuesOfOpened = this.openedCards.map((card) => card.hiddenValue);
     return hiddenValuesOfOpened[0] === hiddenValuesOfOpened[1];
   }
 
@@ -92,10 +91,10 @@ export default class Game {
   }
 
   get openedCards() {
-    return this.cards.filter(a => a.opened);
+    return this.cards.filter((a) => a.opened);
   }
 
   get visibleCardsNum() {
-    return this.cards.filter(a => a.visible).length;
+    return this.cards.filter((a) => a.visible).length;
   }
 }
