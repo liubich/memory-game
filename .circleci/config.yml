@@ -18,9 +18,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run:
           name: install dependences
@@ -31,7 +31,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-     
+
       - run:
           name: check code style
           command: npm run lint:js
@@ -39,3 +39,7 @@ jobs:
       - run:
           name: check css style
           command: npm run lint:css
+
+      - run:
+          name: build project
+          command: npm run build
