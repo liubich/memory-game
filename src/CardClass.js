@@ -1,4 +1,4 @@
-class Card {
+export class Card {
   constructor(cardNumber, cardsCount, clickListener) {
     const div = document.createElement('div');
     div.classList.add(`card__card-container--quantity-${cardsCount}`, 'card__card-container', 'card__card-container--scale');

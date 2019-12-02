@@ -1,4 +1,4 @@
-class Timer {
+export class Timer {
   constructor() {
     this.started = false;
   }
@@ -28,4 +28,3 @@ class Timer {
     return this.started;
   }
 }
-  

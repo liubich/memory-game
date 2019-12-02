@@ -1,3 +1,6 @@
+import Game from './GameClass';
+import Card from './CardClass';
+
 class DOMManager {
   constructor() {
     this.cardOnClick = this.cardOnClick.bind(this);
