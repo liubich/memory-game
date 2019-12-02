@@ -1,4 +1,4 @@
-export class Timer {
+export default class Timer {
   constructor() {
     this.started = false;
   }

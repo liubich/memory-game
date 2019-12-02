@@ -1,6 +1,6 @@
 import Timer from './TimerClass';
 
-export class Game {
+export default class Game {
   constructor() {
     this.imageOnClickBinded = this.imageOnClick.bind(this);
     this.timer = new Timer();
