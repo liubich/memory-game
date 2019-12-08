@@ -1,4 +1,4 @@
-import Timer from './TimerClass';
+import Timer from './Timer';
 
 export default class Game {
   constructor() {
