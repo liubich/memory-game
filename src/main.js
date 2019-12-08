@@ -1,4 +1,4 @@
-import Game from './GameClass';
+import Game from './Game';
 import Card from './Card';
 
 class DOMManager {
