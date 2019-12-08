@@ -1,5 +1,5 @@
 import Game from './GameClass';
-import Card from './CardClass';
+import Card from './Card';
 
 class DOMManager {
   constructor() {
