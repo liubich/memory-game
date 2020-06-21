@@ -22,7 +22,7 @@
   "homepage": "https://github.com/liubich/memory-game#readme",
   "devDependencies": {
     "eslint": "7.0.0",
-    "eslint-config-airbnb-base": "14.1.0",
+    "eslint-config-airbnb-base": "14.2.0",
     "eslint-plugin-import": "2.20.2",
     "stylelint": "13.3.3",
     "stylelint-config-standard": "20.0.0",
